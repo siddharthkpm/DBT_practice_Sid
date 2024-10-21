@@ -1,25 +1,17 @@
-{{ config(materialized='table') }}
+{{ config(materialized="table") }}
 
-WITH a AS (
-    SELECT 
-        B.name AS TeamName,
-        A.year,
-        SUM(A.G) AS no_of_goals,
-        ROW_NUMBER() OVER (PARTITION BY A.year ORDER BY SUM(A.G) DESC) AS Top_5
-    FROM 
-     hockeydb.hockey.scoring A
-    JOIN 
-        hockeydb.hockey.teams B ON s.tmid = t.tmid
-    WHERE 
-        s.year = 2011
-    GROUP BY 
-        B.name, A.year
-)
-SELECT 
-    Team_Name,
-    year,
-    no_of_goals
-FROM 
-    a
-WHERE 
-    rank_1 <=5
+with
+    cte as (
+        select
+            b.name as teamname,
+            a.year,
+            sum(a.g) as no_of_goals,
+            row_number() over (partition by a.year order by sum(a.g) desc) as top_5
+        from hockeydb.hockey.scoring a
+        join hockeydb.hockey.teams b on a.tmid = b.tmid
+        where a.year = 2011
+        group by b.name, a.year
+    )
+select teamname, year, no_of_goals
+from cte
+where top_5 <= 5
