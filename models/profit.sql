@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='view'
+        materialized='table'
     )
 }}
 SELECT
@@ -10,7 +10,7 @@ SELECT
     SUM(s.quantity * s.unit_price) AS sales,
     SUM(s.quantity) AS quantity,
     AVG(s.unit_price) AS unit_price,
-    SUM((s.unit_price - p.cost_price) * s.quantity) AS profit
+    SUM((s.unit_price - p.cost_price) * s.quantity) AS profit_percentage
 FROM
     training.dbt_srajakumar.salesdata s
 JOIN
