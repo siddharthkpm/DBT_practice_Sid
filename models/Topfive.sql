@@ -2,18 +2,18 @@
 
 WITH a AS (
     SELECT 
-        t.name AS Team_Name,
-        s.year,
-        SUM(s.G) AS no_of_goals,
-        ROW_NUMBER() OVER (PARTITION BY s.year ORDER BY SUM(s.G) DESC) AS rank_1
+        B.name AS TeamName,
+        A.year,
+        SUM(A.G) AS no_of_goals,
+        ROW_NUMBER() OVER (PARTITION BY A.year ORDER BY SUM(A.G) DESC) AS Top_5
     FROM 
-     hockeydb.hockey.scoring s
+     hockeydb.hockey.scoring A
     JOIN 
-        hockeydb.hockey.teams t ON s.tmid = t.tmid
+        hockeydb.hockey.teams B ON s.tmid = t.tmid
     WHERE 
         s.year = 2011
     GROUP BY 
-        t.name, s.year
+        B.name, A.year
 )
 SELECT 
     Team_Name,
