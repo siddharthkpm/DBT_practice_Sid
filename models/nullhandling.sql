@@ -6,4 +6,4 @@ SELECT
   COALESCE(POS, 'NA') AS POS,
   COALESCE(GP, 0) AS GP
 FROM
-  HOCKEYDB.HOCKEY.SCORING
+  {{ source('mock_src', 'scoring') }}

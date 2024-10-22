@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: mock_src
+    database: HOCKEYDB
+    schema: HOCKEY
+    
+    tables:
+      - name: SCORING
+      - name: HOF

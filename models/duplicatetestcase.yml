@@ -1,0 +1,10 @@
+# models/schema.yml
+
+version: 2
+
+models:
+  - name: directquery
+    description: "this is the direct query which consists of duplicate"
+    tests:
+          - duplicate_checking:
+              columns: ['empid', 'name','phone']

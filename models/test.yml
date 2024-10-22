@@ -1,0 +1,9 @@
+version: 2
+ 
+models:
+  - name: nullhandling
+    description: "This table contains transformed scoring data."
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: source('mock_src', 'SCORING')
+ 
